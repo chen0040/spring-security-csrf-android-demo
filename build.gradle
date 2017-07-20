@@ -112,7 +112,7 @@ if (project.hasProperty('release')) {
 
 
                     pom.project {
-                        name 'Android Magento Client'
+                        name 'Android Spring Security'
                         description 'Android client for communicating with a magento site'
                         packaging 'jar'
                         url 'https://github.com/chen0040/android-spring-security'
