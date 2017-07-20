@@ -1,0 +1,158 @@
+// Top-level build file where you can add configuration options common to all sub-projects/modules.
+apply plugin: 'com.android.library'
+
+android {
+    compileSdkVersion 25
+    buildToolsVersion "25.0.3"
+    defaultConfig {
+
+        minSdkVersion 15
+        targetSdkVersion 25
+        versionCode 1
+        versionName "1.0"
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+
+}
+
+
+
+dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
+        exclude group: 'com.android.support', module: 'support-annotations'
+    })
+    compile 'com.android.support:appcompat-v7:25.3.1'
+    testCompile 'junit:junit:4.12'
+    compile group: 'com.alibaba', name: 'fastjson', version: '1.1.53.android'
+    testCompile "org.robolectric:robolectric:3.3.2"
+
+    compile group: 'org.slf4j', name: 'slf4j-android', version: '1.7.7'
+}
+
+
+
+buildscript {
+    repositories {
+        jcenter()
+        //mavenCentral()
+        maven {
+            url "http://repo.maven.apache.org/maven2"
+        }
+    }
+    dependencies {
+        classpath 'com.android.tools.build:gradle:2.3.2'
+        classpath "io.codearte.gradle.nexus:gradle-nexus-staging-plugin:0.9.0"
+        // NOTE: Do not place your application dependencies here; they belong
+        // in the individual module build.gradle files
+    }
+}
+
+apply plugin: 'io.codearte.nexus-staging'
+
+allprojects {
+    repositories {
+        jcenter()
+        mavenCentral()
+    }
+}
+
+
+if (project.hasProperty('release')) {
+    subprojects {
+
+
+        task javadocJar(type: Jar) {
+            source = android.sourceSets.main.java.srcDirs
+            classpath += project.files(android.getBootClasspath().join(File.pathSeparator))
+        }
+
+        task sourcesJar(type: Jar) {
+            classifier = 'sources'
+            from android.sourceSets.main.java.srcDirs
+        }
+
+        task javadocJar(type: Jar, dependsOn: javadoc) {
+            classifier = 'javadoc'
+            from javadoc.destinationDir
+        }
+
+        artifacts {
+            archives javadocJar
+            archives sourcesJar
+        }
+    }
+
+    allprojects {
+        apply plugin: 'signing'
+        apply plugin: 'maven'
+
+        // Signature of artifacts
+        signing {
+            sign configurations.archives
+        }
+
+        // OSSRH publication
+        uploadArchives {
+            repositories {
+                mavenDeployer {
+                    // POM signature
+                    beforeDeployment { MavenDeployment deployment -> signing.signPom(deployment) }
+                    // Target repository
+                    repository(url: "https://oss.sonatype.org/service/local/staging/deploy/maven2/") {
+                        authentication(userName: ossrhUser, password: ossrhPassword)
+                    }
+
+
+
+                    pom.project {
+                        name 'Android Magento Client'
+                        description 'Android client for communicating with a magento site'
+                        packaging 'jar'
+                        url 'https://github.com/chen0040/android-spring-security'
+                        groupId 'com.github.chen0040'
+                        artifactId 'android-spring-security'
+                        version '1.0.1'
+
+                        scm {
+                            url 'https://github.com/chen0040/android-spring-security.git'
+                            connection 'scm:https://github.com/chen0040/android-spring-security.git'
+                            developerConnection 'scm:git://github.com/chen0040/android-spring-security.git'
+                        }
+
+                        licenses {
+                            license {
+                                name 'MIT License'
+                                url 'https://github.com/chen0040/android-spring-security/blob/master/LICENSE'
+                                distribution 'repo'
+                            }
+                        }
+
+                        developers {
+                            developer {
+                                id 'chen0040'
+                                name 'Xianshun Chen'
+                                email 'xs0040@gmail.com'
+                                url 'https://github.com/chen0040'
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+    }
+}
+
+nexusStaging {
+    username = ossrhUser
+    password = ossrhPassword
+    packageGroup = "com.github.chen0040"
+}
+
