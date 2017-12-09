@@ -222,6 +222,7 @@ public class OkHttpComponent implements WebClient {
             }
             response.close();
         } catch (IOException e) {
+            e.printStackTrace();
             resp = e.getMessage();
         }
 

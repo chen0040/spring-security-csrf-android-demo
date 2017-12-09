@@ -18,7 +18,7 @@ import java.util.List;
  * Created by xschen on 12/6/2017.
  */
 @RunWith(RobolectricTestRunner.class)
-@Config(manifest= Config.NONE)
+@Config(manifest= Config.NONE, sdk = 23)
 public class SpringBootClientUnitTest extends AndroidLogContext {
 
 

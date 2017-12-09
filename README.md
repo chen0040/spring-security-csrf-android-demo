@@ -133,7 +133,14 @@ System.out.println(client.getSecured("http://localhost:8080/users/get-account"))
 
 The following are the excerpt from spring-boot-android-client unit test to show how to login to the spring-boot-application:
 
+```bash
+SpringBootClient client = new SpringBootClient();
 
+SpringIdentity identity = client.login("http://localhost:8080/erp/login-api-json", "admin", "admin");
+
+System.out.println(JSON.toJSONString(identity, SerializerFeature.PrettyFormat));
+System.out.println(client.getSecured("http://localhost:8080/users/get-account"));
+```
 
 
 
