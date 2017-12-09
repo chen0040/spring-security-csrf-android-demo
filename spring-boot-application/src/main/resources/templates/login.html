@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html class="landing-page" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Home</title>
+    <link href="/css/app-login.style.css" rel="stylesheet" />
+    <link href="/jslib/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="/jslib/bootstrap/css/bootstrap-theme.min.css" rel="stylesheet" />
+    <link href="/jslib/font-awesome/css/font-awesome.min.css" rel="stylesheet" />
+</head>
+<body>
+
+<div class="inverse-wrapper login-wrapper wow fadeInUp">
+    <div class="container">
+
+        <div class="jumbotron">
+
+            <h2>Home</h2>
+
+            <img id="profile-img" class="profile-img-card" src="//ssl.gstatic.com/accounts/ui/avatar_2x.png" />
+            <p id="profile-name" class="profile-name-card"></p>
+            <p th:if="${param.logout}" class="alert font-sm"><span>You have been logged out</span></p>
+            <p th:if="${param.error}" class="alert alert-error font-sm"><span>There was an error, please try again</span></p>
+
+            <form class="form-signin" name="form" th:action="@{/login}" action="/login" method="POST">
+                <div class="form-group">
+                    <input class="form-control" type="text" id="username" name="username" value="" />
+                </div>
+
+                <div class="form-group">
+                    <input class="form-control" id="password" type="password" name="password" />
+                </div>
+
+                <div class="cold-md-12 m-t-20 text-center">
+                    <div class="form-group">
+                        <button type="submit" id="login"
+                                class="btn btn-lg btn-primary btn-block btn-signin" tabindex="3">
+                            <span>Login</span>
+                        </button>
+                    </div>
+                </div>
+
+
+            </form>
+
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
