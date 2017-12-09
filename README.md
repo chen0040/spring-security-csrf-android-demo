@@ -1,13 +1,12 @@
-# spring-security-angular-4-demo
+# spring-security-csrf-android-demo
 
-This project contains demo codes on how to communicate an angular 4 project with a spring boot application that has spring security enabled.
+This project contains demo codes on how to communicate an android project with a spring boot application that has spring security and CSRF enabled.
 
 # Features
 
 * Simple spring boot web application with spring security and CSRF enabled
 * Java client to authenticate and communicate with the spring boot web application
-* Javascript client to authenticate and communicate with the spring boot web application
-* Angular 4 web application to authenticate and communicate with the spring boot web application
+* Android client to authenticate and communicate with the spring boot web application
 
 # Spring Security
 
@@ -130,43 +129,11 @@ System.out.println(JSON.toJSONString(identity, SerializerFeature.PrettyFormat));
 System.out.println(client.getSecured("http://localhost:8080/users/get-account"));
 ```
 
-### Javascript Client
+### Android Client
 
-The following are the excerpt from spring-boot-js-client unit test to show how to login to the spring-boot-application:
+The following are the excerpt from spring-boot-android-client unit test to show how to login to the spring-boot-application:
 
-```js
-var expect    = require("chai").expect;
-var sbjclient = require('../src/sbjclient');
-var url = 'http://localhost:8080/erp/login-api-json';
 
-var cl = new sbjclient.SpringBootClient();
-cl.login(url, "admin", "admin", function(_csrf, _sessionId, authenticated){
-    console.log('authenticated: ' + authenticated);
-    console.log('_csrf: ' + _csrf);
-    console.log('JSESSIONID: ' + _sessionId);
-    expect(authenticated).to.equal(true);
-    cl.getJsonSecured('http://localhost:8080/users/get-account', function(account){
-        console.log(account);
-    });
-});
-```
-
-### Angular 4 NodeJS Server
-
-The angular 4 nodejs server server.js is in the ng4-application folder. its uses sbjclient from spring-boot-js-client,
-the spring boot javascript client to authenticate with spring-boot-application. 
-
-To test the angular 4 application, run the following command in the ng4-application directory (make sure that spring-boot-application is already running):
-
-```bash
-ng build
-node server.js
-```
-
-This will start the angular 4 server at http://localhost:3000
-
-The detail implementation of angular 4 to authenticate with spring-boot-application can be found in server.js and
-src/app/app.service.ts
 
 
 
