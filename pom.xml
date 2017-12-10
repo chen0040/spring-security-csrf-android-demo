@@ -9,6 +9,37 @@
     <packaging>pom</packaging>
     <version>1.0.1</version>
 
+    <properties>
+        <surefire.version>2.19</surefire.version>
+    </properties>
+
+    <profiles>
+
+        <profile>
+            <id>local</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <properties>
+                <current.scope>compile</current.scope>
+            </properties>
+
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-surefire-plugin</artifactId>
+                        <version>${surefire.version}</version>
+                        <configuration>
+                            <skipTests>true</skipTests>
+                            <argLine>-Dfile.encoding=UTF-8</argLine>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
+	
     <modules>
         <module>spring-boot-application</module>
         <module>spring-boot-java-client</module>
